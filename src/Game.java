@@ -24,8 +24,8 @@ public class Game {
                 String objectiveGenre1, String objectiveGenre2) {
         this.movies = new Movies(fileName);
         this.autocompleteFile = "src/autocomplete.txt";
-        this.player1 = new Player(player1Name, objectiveGenre1, 2);
-        this.player2 = new Player(player2Name, objectiveGenre2, 2);
+        this.player1 = new Player(player1Name, objectiveGenre1, 5);
+        this.player2 = new Player(player2Name, objectiveGenre2, 5);
         this.moviesPlayed = new HashSet<>();
         this.lastFivePlayed = new LinkedList<>();
         this.turn = true;
@@ -33,6 +33,7 @@ public class Game {
         this.winner = null;
         this.prevMovie = movies.getRandomMovie();
         moviesPlayed.add(prevMovie);
+        lastFivePlayed.add(new AbstractMap.SimpleEntry<>(prevMovie, new ArrayList<>()));
     }
 
     /**
@@ -45,6 +46,7 @@ public class Game {
     public boolean update(String moviePlayed, String player) {
         // Check that movie hasn't already been used
         if (moviesPlayed.contains(moviePlayed)) {
+            System.out.println(moviePlayed + " has already been played.");
             return false;
         }
 
@@ -109,22 +111,6 @@ public class Game {
      */
     public String getWhosTurn() {
         return turn ? player1.getUsername() : player2.getUsername();
-    }
-
-    /**
-     * Gets the objective genre for Player 1.
-     * @return Player 1's objective genre.
-     */
-    public String gameConditionPlayer1() {
-        return player1.getObjectiveGenre();
-    }
-
-    /**
-     * Gets the objective genre for Player 2.
-     * @return Player 2's objective genre.
-     */
-    public String gameConditionPlayer2() {
-        return player2.getObjectiveGenre();
     }
 
     /**

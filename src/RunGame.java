@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 
 public class RunGame {
 
@@ -22,6 +19,21 @@ public class RunGame {
 
         while (true) {
             System.out.println("It's " + game.getWhosTurn() + "'s turn!");
+
+            LinkedList<Map.Entry<String, List<String>>> lastFive = game.getLastFivePlayed();
+            for(Map.Entry<String, List<String>> entry : lastFive) {
+                if (!(entry.getKey()).equals((lastFive.getLast()).getKey())) {
+                    System.out.println("        " + (String)entry.getKey());
+                    System.out.println("            |");
+
+                    for(String link : entry.getValue()) {
+                        System.out.println("        " + link);
+                    }
+
+                    System.out.println("            |");
+                }
+            }
+            System.out.println("        " + ((Map.Entry<?, ?>)lastFive.getLast()).getKey());
 
             AutocompleteGUI.setSelectedMovie(null);
             AutocompleteGUI.main(new String[] {"src/autocomplete.txt", "5"});
@@ -56,14 +68,19 @@ public class RunGame {
 
                 System.out.println("\nLink usage:");
                 System.out.println(game.usernamePlayer1() + "'s links:");
+
+                StringBuilder sb = new StringBuilder();
                 for (var entry : game.getPlayer1LinkUsageDisplay().entrySet()) {
-                    System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+                    sb.append(" | ").append(entry.getKey()).append(": ").append(entry.getValue());
                 }
+                System.out.println(sb);
 
                 System.out.println(game.usernamePlayer2() + "'s links:");
+                sb = new StringBuilder();
                 for (var entry : game.getPlayer2LinkUsageDisplay().entrySet()) {
-                    System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+                    sb.append(" | ").append(entry.getKey()).append(": ").append(entry.getValue());
                 }
+                System.out.println(sb);
 
                 if (game.isGameOver()) {
                     System.out.println("🎉 Game ended: " + game.getWinner() + " has won!");

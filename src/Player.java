@@ -115,12 +115,4 @@ public class Player {
     public String getObjectiveGenre() {
         return objectiveGenre;
     }
-
-    /**
-     * Provides a status string for the player.
-     * @return The status of the player including progress.
-     */
-    public String getStatus() {
-        return username + " - " + progress + "/" + objectiveAmount + " " + objectiveGenre;
-    }
 }
